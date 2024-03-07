@@ -2,7 +2,7 @@
  *
  */
 
-package com.everdro1d.main.java;
+package main.com.everdro1d.swingtemplate;
 
 import com.everdro1d.libs.swing.*;
 
@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import static com.everdro1d.main.java.MainWorker.windowPosition;
+import static main.com.everdro1d.swingtemplate.MainWorker.windowPosition;
 
 public class MainWindow extends JFrame {
     // Variables ------------------------------------------------------------------------------------------------------|
@@ -25,9 +25,10 @@ public class MainWindow extends JFrame {
     public static String fontName = "Tahoma";
     // Font name for the application
     public static int fontSize = 16;
+    // Font size for the application
 
-    private final int windowWidth = 600;
-    private final int windowHeight = 400;
+    private final int WINDOW_WIDTH = 600;
+    private final int WINDOW_HEIGHT = 400;
 
 
     // End of variables -----------------------------------------------------------------------------------------------|
@@ -37,6 +38,8 @@ public class MainWindow extends JFrame {
         initializeGUIComponents();
 
         topFrame.setVisible(true);
+
+        SwingGUI.setHandCursorToClickableComponents(topFrame);
     }
 
     /**
@@ -45,7 +48,8 @@ public class MainWindow extends JFrame {
     private void initializeWindowProperties() {
         topFrame = this;
         topFrame.setTitle("MainWindow");
-        topFrame.setMinimumSize(new Dimension(windowWidth, windowHeight));
+        SwingGUI.setFrameIcon(topFrame, "/images/icon32.png", this.getClass(), MainWorker.debug);
+        topFrame.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         topFrame.setResizable(false);
         topFrame.setLocationRelativeTo(null);

@@ -2,18 +2,32 @@
  *
  */
 
-package com.everdro1d.main.java;
+package main.com.everdro1d.swingtemplate;
 
+import com.everdro1d.libs.commands.CommandInterface;
+import com.everdro1d.libs.commands.CommandManager;
 import com.everdro1d.libs.core.*;
 import com.everdro1d.libs.swing.*;
+import com.everdro1d.libs.swing.components.DebugConsoleWindow;
+import main.com.everdro1d.swingtemplate.commands.DebugCommand;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 import java.util.prefs.Preferences;
 
 public class MainWorker {
     // Variables ------------------------------------------------------------------------------------------------------|
+    private static final Map<String, CommandInterface> CUSTOM_COMMANDS_MAP = Map.of(
+            "-debug", new DebugCommand()
+    );
+    public static CommandManager commandManager = new CommandManager(CUSTOM_COMMANDS_MAP);
+    // CommandManager object for handling CLI commands
+
     public static boolean debug = false;
     // Boolean to enable debug logging output all 'sout' statements must be wrapped in 'if (debug)'
+
+    public static DebugConsoleWindow debugConsoleWindow;
 
     static final Preferences prefs = Preferences.userNodeForPackage(MainWorker.class);
     // Preferences object for saving and loading user settings
@@ -24,8 +38,8 @@ public class MainWorker {
     // End of variables -----------------------------------------------------------------------------------------------|
 
     public static void main(String[] args) {
-        ApplicationCore.checkCLIArgs(args);
-        checkOSCompatibility(debug);
+        ApplicationCore.checkCLIArgs(args, commandManager);
+        checkOSCompatibility();
         SwingGUI.setLookAndFeel(true, false, debug);
         loadPreferences();
 
@@ -38,30 +52,28 @@ public class MainWorker {
 
     /**
      * Detects the OS to determine compat with application and dependencies.
-     * @param debug whether to print debug information
-     * @see #executeOSSpecificCode(String, boolean)
+     * @see #executeOSSpecificCode(String)
      */
-    public static void checkOSCompatibility(boolean debug) {
+    public static void checkOSCompatibility() {
         String detectedOS = ApplicationCore.detectOS(debug);
-        executeOSSpecificCode(detectedOS, debug);
+        executeOSSpecificCode(detectedOS);
     }
 
     /**
      * Execute OS specific code.
      * @param detectedOS the detected OS
-     * @param debug whether to print debug information
-     * @see #checkOSCompatibility(boolean)
+     * @see #checkOSCompatibility()
      */
-    public static void executeOSSpecificCode(String detectedOS, boolean debug) {
+    public static void executeOSSpecificCode(String detectedOS) {
         switch (detectedOS) {
             case "Windows" -> {
-                System.out.println("Windows OS detected.");
+                // Windows specific code
             }
             case "macOS" -> {
-                System.out.println("macOS detected.");
+                // macOS specific code
             }
             case "Unix" -> {
-                System.out.println("Unix OS detected.");
+                // Unix specific code
             }
             default -> {
                 System.out.println("Unknown OS detected. Exiting.");
@@ -76,8 +88,16 @@ public class MainWorker {
     private static void loadPreferences() {
         loadWindowPosition();
 
+        savePreferencesOnExit();
+    }
+
+    /**
+     * Save the user settings on exit.
+     */
+    private static void savePreferencesOnExit() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             // Save the user settings on exit
+            saveWindowPosition();
         }));
     }
 
@@ -88,16 +108,19 @@ public class MainWorker {
         windowPosition[0] = prefs.getInt("framePosX", 0);
         windowPosition[1] = prefs.getInt("framePosY", 0);
         windowPosition[2] = prefs.getInt("activeMonitor", 0);
-
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            prefs.putInt("framePosX", windowPosition[0]);
-            prefs.putInt("framePosY", windowPosition[1]);
-            prefs.putInt("activeMonitor", windowPosition[2]);
-        }));
     }
 
     /**
-     * Start the com.everdro1d.main window.
+     * Save the window position to the preferences.
+     */
+    private static void saveWindowPosition() {
+        prefs.putInt("framePosX", windowPosition[0]);
+        prefs.putInt("framePosY", windowPosition[1]);
+        prefs.putInt("activeMonitor", windowPosition[2]);
+    }
+
+    /**
+     * Start the MainWindow.
      */
     private static void startMainWindow() {
         EventQueue.invokeLater(() -> {
@@ -109,8 +132,20 @@ public class MainWorker {
                 );
             } catch (Exception ex) {
                 if (debug) ex.printStackTrace(System.err);
-                System.err.println("Failed to start com.everdro1d.main window.");
+                System.err.println("Failed to start MainWindow.");
             }
         });
+    }
+
+    public static void showDebugConsole() {
+        if (debugConsoleWindow == null) {
+            debugConsoleWindow = new DebugConsoleWindow(MainWindow.topFrame, MainWindow.fontName, MainWindow.fontSize, prefs, debug);
+            if (debug) System.out.println("Debug console created.");
+        } else if (!debugConsoleWindow.isVisible()) {
+            debugConsoleWindow.setVisible(true);
+            if (debug) System.out.println("Debug console shown.");
+        } else {
+            if (debug) System.out.println("Debug console already open.");
+        }
     }
 }
