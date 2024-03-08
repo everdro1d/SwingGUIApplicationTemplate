@@ -41,13 +41,12 @@ public class MainWorker {
         ApplicationCore.checkCLIArgs(args, commandManager);
         checkOSCompatibility();
         SwingGUI.setLookAndFeel(true, false, debug);
-        loadPreferences();
-
         SwingGUI.lightOrDarkMode(false, new JFrame[]{MainWindow.topFrame});
         SwingGUI.uiSetup(false, MainWindow.fontName, MainWindow.fontSize);
+        if (debug) showDebugConsole();
+        loadPreferences();
 
         startMainWindow();
-
     }
 
     /**
