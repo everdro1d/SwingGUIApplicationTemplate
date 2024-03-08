@@ -8,7 +8,6 @@ public class DebugCommand implements CommandInterface {
     @Override
     public void execute(CommandManager commandManager) {
         MainWorker.debug = true;
-        MainWorker.showDebugConsole();
         System.out.println("Debug mode enabled.");
     }
 }
