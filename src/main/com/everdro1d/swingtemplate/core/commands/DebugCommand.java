@@ -1,8 +1,8 @@
-package main.com.everdro1d.swingtemplate.commands;
+package main.com.everdro1d.swingtemplate.core.commands;
 
 import com.everdro1d.libs.commands.CommandInterface;
 import com.everdro1d.libs.commands.CommandManager;
-import main.com.everdro1d.swingtemplate.MainWorker;
+import main.com.everdro1d.swingtemplate.core.MainWorker;
 
 public class DebugCommand implements CommandInterface {
     @Override

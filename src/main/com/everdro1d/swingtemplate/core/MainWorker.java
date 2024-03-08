@@ -2,14 +2,15 @@
  *
  */
 
-package main.com.everdro1d.swingtemplate;
+package main.com.everdro1d.swingtemplate.core;
 
 import com.everdro1d.libs.commands.CommandInterface;
 import com.everdro1d.libs.commands.CommandManager;
 import com.everdro1d.libs.core.*;
 import com.everdro1d.libs.swing.*;
 import com.everdro1d.libs.swing.components.DebugConsoleWindow;
-import main.com.everdro1d.swingtemplate.commands.DebugCommand;
+import main.com.everdro1d.swingtemplate.ui.MainWindow;
+import main.com.everdro1d.swingtemplate.core.commands.DebugCommand;
 
 import javax.swing.*;
 import java.awt.*;

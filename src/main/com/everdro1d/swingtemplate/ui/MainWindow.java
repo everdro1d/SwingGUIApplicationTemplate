@@ -2,16 +2,17 @@
  *
  */
 
-package main.com.everdro1d.swingtemplate;
+package main.com.everdro1d.swingtemplate.ui;
 
 import com.everdro1d.libs.swing.*;
+import main.com.everdro1d.swingtemplate.core.MainWorker;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import static main.com.everdro1d.swingtemplate.MainWorker.windowPosition;
+import static main.com.everdro1d.swingtemplate.core.MainWorker.windowPosition;
 
 public class MainWindow extends JFrame {
     // Variables ------------------------------------------------------------------------------------------------------|
