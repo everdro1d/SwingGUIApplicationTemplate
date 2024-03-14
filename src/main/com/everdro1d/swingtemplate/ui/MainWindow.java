@@ -4,14 +4,14 @@
 
 package main.com.everdro1d.swingtemplate.ui;
 
-import com.everdro1d.libs.swing.*;
-import main.com.everdro1d.swingtemplate.core.MainWorker;
+import com.everdro1d.libs.swing.SwingGUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+import static main.com.everdro1d.swingtemplate.core.MainWorker.localeManager;
 import static main.com.everdro1d.swingtemplate.core.MainWorker.windowPosition;
 
 public class MainWindow extends JFrame {
@@ -35,6 +35,12 @@ public class MainWindow extends JFrame {
     // End of variables -----------------------------------------------------------------------------------------------|
 
     public MainWindow() {
+        // if the locale does not contain the class, add it and it's components
+        if (!localeManager.getClassesInLocaleMap().contains("MainWindow")) {
+            addClassToLocale();
+        }
+        useLocale();
+
         initializeWindowProperties();
         initializeGUIComponents();
 
@@ -43,13 +49,26 @@ public class MainWindow extends JFrame {
         SwingGUI.setHandCursorToClickableComponents(topFrame);
     }
 
+    private void addClassToLocale() {
+//        Map<String, Map<String, String>> map = new TreeMap<>();
+//        map.put("Main", new TreeMap<>());
+//        Map<String, String> mainMap = map.get("Main");
+//
+//        localeManager.addClassSpecificMap("MainWindow", map);
+    }
+
+    private void useLocale() {
+        //Map<String, String> varMap = localeManager.getAllVariablesWithinClassSpecificMap("MainWindow");
+        //titleText = varMap.getOrDefault("titleText", titleText);
+    }
+
     /**
      * Initialize the window.
      */
     private void initializeWindowProperties() {
         topFrame = this;
-        topFrame.setTitle("MainWindow");
-        SwingGUI.setFrameIcon(topFrame, "/images/icon32.png", this.getClass(), MainWorker.debug);
+        topFrame.setTitle("MainWindow"); //TODO
+        SwingGUI.setFrameIcon(topFrame, "images/icon32.png", this.getClass());
         topFrame.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         topFrame.setResizable(false);

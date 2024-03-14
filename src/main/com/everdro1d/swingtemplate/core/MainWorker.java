@@ -7,6 +7,7 @@ package main.com.everdro1d.swingtemplate.core;
 import com.everdro1d.libs.commands.CommandInterface;
 import com.everdro1d.libs.commands.CommandManager;
 import com.everdro1d.libs.core.*;
+import com.everdro1d.libs.io.Files;
 import com.everdro1d.libs.swing.*;
 import com.everdro1d.libs.swing.components.DebugConsoleWindow;
 import main.com.everdro1d.swingtemplate.ui.MainWindow;
@@ -14,6 +15,8 @@ import main.com.everdro1d.swingtemplate.core.commands.DebugCommand;
 
 import javax.swing.*;
 import java.awt.*;
+import java.nio.file.Path;
+import java.util.Locale;
 import java.util.Map;
 import java.util.prefs.Preferences;
 
@@ -24,6 +27,11 @@ public class MainWorker {
     );
     public static CommandManager commandManager = new CommandManager(CUSTOM_COMMANDS_MAP);
     // CommandManager object for handling CLI commands
+
+    private static String currentLocale = "eng";
+
+    public static final LocaleManager localeManager = new LocaleManager("locale_eng", MainWorker.class);
+    // LocaleManager object for handling locale changes. loads default locale on creation
 
     public static boolean debug = false;
     // Boolean to enable debug logging output all 'sout' statements must be wrapped in 'if (debug)'
@@ -41,11 +49,15 @@ public class MainWorker {
     public static void main(String[] args) {
         ApplicationCore.checkCLIArgs(args, commandManager);
         checkOSCompatibility();
-        SwingGUI.setLookAndFeel(true, false, debug);
+
+        SwingGUI.setLookAndFeel(true, false);
         SwingGUI.lightOrDarkMode(false, new JFrame[]{MainWindow.topFrame});
         SwingGUI.uiSetup(false, MainWindow.fontName, MainWindow.fontSize);
-        if (debug) showDebugConsole();
         loadPreferences();
+
+        localeManager.loadLocaleFromFile("locale_" + currentLocale);
+        System.out.println(localeManager.getLocaleDirPath());
+        if (debug) showDebugConsole();
 
         startMainWindow();
     }
@@ -55,7 +67,7 @@ public class MainWorker {
      * @see #executeOSSpecificCode(String)
      */
     public static void checkOSCompatibility() {
-        String detectedOS = ApplicationCore.detectOS(debug);
+        String detectedOS = ApplicationCore.detectOS();
         executeOSSpecificCode(detectedOS);
     }
 
@@ -87,6 +99,8 @@ public class MainWorker {
      */
     private static void loadPreferences() {
         loadWindowPosition();
+        // set locale
+        currentLocale = prefs.get("currentLocale", "eng");
 
         savePreferencesOnExit();
     }
@@ -98,6 +112,7 @@ public class MainWorker {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             // Save the user settings on exit
             saveWindowPosition();
+            prefs.put("currentLocale", currentLocale);
         }));
     }
 
@@ -139,7 +154,8 @@ public class MainWorker {
 
     public static void showDebugConsole() {
         if (debugConsoleWindow == null) {
-            debugConsoleWindow = new DebugConsoleWindow(MainWindow.topFrame, MainWindow.fontName, MainWindow.fontSize, prefs, debug);
+            debugConsoleWindow = new DebugConsoleWindow(
+                    MainWindow.topFrame, MainWindow.fontName, MainWindow.fontSize, prefs, debug, localeManager);
             if (debug) System.out.println("Debug console created.");
         } else if (!debugConsoleWindow.isVisible()) {
             debugConsoleWindow.setVisible(true);
