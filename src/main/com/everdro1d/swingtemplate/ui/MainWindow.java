@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static main.com.everdro1d.swingtemplate.core.MainWorker.localeManager;
 import static main.com.everdro1d.swingtemplate.core.MainWorker.windowPosition;
@@ -22,6 +24,8 @@ public class MainWindow extends JFrame {
         private JPanel mainPanel;
 
     // End of Swing components --------------------------------------------|
+
+    private String titleText = "Template Application - MainWindow";
 
     public static String fontName = "Tahoma";
     // Font name for the application
@@ -50,16 +54,17 @@ public class MainWindow extends JFrame {
     }
 
     private void addClassToLocale() {
-//        Map<String, Map<String, String>> map = new TreeMap<>();
-//        map.put("Main", new TreeMap<>());
-//        Map<String, String> mainMap = map.get("Main");
-//
-//        localeManager.addClassSpecificMap("MainWindow", map);
+        Map<String, Map<String, String>> map = new TreeMap<>();
+        map.put("Main", new TreeMap<>());
+        Map<String, String> mainMap = map.get("Main");
+        mainMap.put("titleText", titleText);
+
+        localeManager.addClassSpecificMap("MainWindow", map);
     }
 
     private void useLocale() {
-        //Map<String, String> varMap = localeManager.getAllVariablesWithinClassSpecificMap("MainWindow");
-        //titleText = varMap.getOrDefault("titleText", titleText);
+        Map<String, String> varMap = localeManager.getAllVariablesWithinClassSpecificMap("MainWindow");
+        titleText = varMap.getOrDefault("titleText", titleText);
     }
 
     /**
@@ -67,7 +72,7 @@ public class MainWindow extends JFrame {
      */
     private void initializeWindowProperties() {
         topFrame = this;
-        topFrame.setTitle("MainWindow"); //TODO
+        topFrame.setTitle(titleText); //TODO
         SwingGUI.setFrameIcon(topFrame, "images/icon32.png", this.getClass());
         topFrame.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

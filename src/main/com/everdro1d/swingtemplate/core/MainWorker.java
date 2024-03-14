@@ -6,17 +6,15 @@ package main.com.everdro1d.swingtemplate.core;
 
 import com.everdro1d.libs.commands.CommandInterface;
 import com.everdro1d.libs.commands.CommandManager;
-import com.everdro1d.libs.core.*;
-import com.everdro1d.libs.io.Files;
-import com.everdro1d.libs.swing.*;
+import com.everdro1d.libs.core.ApplicationCore;
+import com.everdro1d.libs.core.LocaleManager;
+import com.everdro1d.libs.swing.SwingGUI;
 import com.everdro1d.libs.swing.components.DebugConsoleWindow;
-import main.com.everdro1d.swingtemplate.ui.MainWindow;
 import main.com.everdro1d.swingtemplate.core.commands.DebugCommand;
+import main.com.everdro1d.swingtemplate.ui.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.nio.file.Path;
-import java.util.Locale;
 import java.util.Map;
 import java.util.prefs.Preferences;
 
@@ -52,11 +50,11 @@ public class MainWorker {
 
         SwingGUI.setLookAndFeel(true, false);
         SwingGUI.lightOrDarkMode(false, new JFrame[]{MainWindow.topFrame});
+        // include all non-modal frames in the array
         SwingGUI.uiSetup(false, MainWindow.fontName, MainWindow.fontSize);
         loadPreferences();
 
         localeManager.loadLocaleFromFile("locale_" + currentLocale);
-        System.out.println(localeManager.getLocaleDirPath());
         if (debug) showDebugConsole();
 
         startMainWindow();
