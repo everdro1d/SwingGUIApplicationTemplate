@@ -28,7 +28,7 @@ public class MainWorker {
 
     private static String currentLocale = "eng";
 
-    public static final LocaleManager localeManager = new LocaleManager("locale_eng", MainWorker.class);
+    public static final LocaleManager localeManager = new LocaleManager(MainWorker.class);
     // LocaleManager object for handling locale changes. loads default locale on creation
 
     public static boolean debug = false;
@@ -50,7 +50,8 @@ public class MainWorker {
 
         SwingGUI.setLookAndFeel(true, false);
         SwingGUI.lightOrDarkMode(false, new JFrame[]{MainWindow.topFrame});
-        // include all non-modal frames in the array
+        // include all non-modal frames in the array. these frames will be updated when the mode is changed
+
         SwingGUI.uiSetup(false, MainWindow.fontName, MainWindow.fontSize);
         loadPreferences();
 
@@ -97,7 +98,6 @@ public class MainWorker {
      */
     private static void loadPreferences() {
         loadWindowPosition();
-        // set locale
         currentLocale = prefs.get("currentLocale", "eng");
 
         savePreferencesOnExit();
@@ -108,7 +108,6 @@ public class MainWorker {
      */
     private static void savePreferencesOnExit() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            // Save the user settings on exit
             saveWindowPosition();
             prefs.put("currentLocale", currentLocale);
         }));

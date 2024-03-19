@@ -72,7 +72,7 @@ public class MainWindow extends JFrame {
      */
     private void initializeWindowProperties() {
         topFrame = this;
-        topFrame.setTitle(titleText); //TODO
+        topFrame.setTitle(titleText);
         SwingGUI.setFrameIcon(topFrame, "images/icon32.png", this.getClass());
         topFrame.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
