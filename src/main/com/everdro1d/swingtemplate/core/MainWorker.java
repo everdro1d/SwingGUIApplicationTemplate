@@ -152,7 +152,7 @@ public class MainWorker {
     public static void showDebugConsole() {
         if (debugConsoleWindow == null) {
             debugConsoleWindow = new DebugConsoleWindow(
-                    MainWindow.topFrame, MainWindow.fontName, MainWindow.fontSize, prefs, debug, localeManager);
+                    MainWindow.topFrame, MainWindow.fontName, MainWindow.fontSize - 2, prefs, debug, localeManager);
             if (debug) System.out.println("Debug console created.");
         } else if (!debugConsoleWindow.isVisible()) {
             debugConsoleWindow.setVisible(true);
