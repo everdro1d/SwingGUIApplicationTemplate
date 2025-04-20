@@ -9,7 +9,7 @@ import com.everdro1d.libs.commands.CommandManager;
 import com.everdro1d.libs.core.*;
 import com.everdro1d.libs.io.Files;
 import com.everdro1d.libs.swing.*;
-import com.everdro1d.libs.swing.components.DebugConsoleWindow;
+import com.everdro1d.libs.swing.windows.DebugConsoleWindow;
 import main.com.everdro1d.swingtemplate.ui.MainWindow;
 import main.com.everdro1d.swingtemplate.core.commands.DebugCommand;
 
@@ -30,12 +30,8 @@ public class MainWorker {
 
     private static String currentLocale = "eng";
 
-    public static final LocaleManager localeManager = new LocaleManager("locale_eng", MainWorker.class);
-    // LocaleManager object for handling locale changes. loads default locale on creation
-
+    // NOTE: debug logging output all 'sout' statements must be wrapped in 'if (debug)'
     public static boolean debug = false;
-    // Boolean to enable debug logging output all 'sout' statements must be wrapped in 'if (debug)'
-
     public static DebugConsoleWindow debugConsoleWindow;
 
     static final Preferences prefs = Preferences.userNodeForPackage(MainWorker.class);
@@ -56,8 +52,13 @@ public class MainWorker {
         loadPreferences();
 
         localeManager.loadLocaleFromFile("locale_" + currentLocale);
-        System.out.println(localeManager.getLocaleDirPath());
-        if (debug) showDebugConsole();
+
+        if (debug) {
+            showDebugConsole();
+            System.out.println("Loaded locale: locale_" + currentLocale + " at: " + localeManager.getLocaleDirPath());
+            System.out.println("Starting " + MainWindow.titleText + " v" + currentVersion + "...");
+            System.out.println("Detected OS: " + ApplicationCore.detectOS());
+        }
 
         startMainWindow();
     }
@@ -152,15 +153,25 @@ public class MainWorker {
         });
     }
 
+    /**
+     * Create or show the debug console window.
+     */
     public static void showDebugConsole() {
         if (debugConsoleWindow == null) {
             debugConsoleWindow = new DebugConsoleWindow(
-                    MainWindow.topFrame, MainWindow.fontName, MainWindow.fontSize, prefs, debug, localeManager);
+                    MainWindow.topFrame, MainWindow.fontName,
+                    (MainWindow.fontSize - 2), prefs,
+                    debug, localeManager
+            );
+
             if (debug) System.out.println("Debug console created.");
+
         } else if (!debugConsoleWindow.isVisible()) {
             debugConsoleWindow.setVisible(true);
             if (debug) System.out.println("Debug console shown.");
+
         } else {
+            EventQueue.invokeLater(() -> debugConsoleWindow.toFront());
             if (debug) System.out.println("Debug console already open.");
         }
     }
