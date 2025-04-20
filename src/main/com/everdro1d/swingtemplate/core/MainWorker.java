@@ -47,6 +47,8 @@ public class MainWorker {
     // NOTE: default window position
     public static int[] windowPosition = {0, 0, 0};
 
+    // NOTE: instance of MainWindow
+    private static MainWindow mainWindow;
 
     // End of variables -----------------------------------------------------------------------------------------------|
 
@@ -166,11 +168,12 @@ public class MainWorker {
     private static void startMainWindow() {
         EventQueue.invokeLater(() -> {
             try {
-                new MainWindow();
+                mainWindow = new MainWindow();
                 SwingGUI.setFramePosition(
                         MainWindow.topFrame,
                         windowPosition[0], windowPosition[1], windowPosition[2]
                 );
+                SwingGUI.setFrameIcon(MainWindow.topFrame, "images/icon32.png", MainWorker.class);
             } catch (Exception ex) {
                 if (debug) ex.printStackTrace(System.err);
                 System.err.println("Failed to start MainWindow. Enable debug logging for more information.");
