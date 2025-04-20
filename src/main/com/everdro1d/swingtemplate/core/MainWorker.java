@@ -51,7 +51,7 @@ public class MainWorker {
     private static MainWindow mainWindow;
 
     /* NOTE: frame array exists because window title bars don't update with the LaF
-     *       add any frames that exist as windows here to fix it
+     *       add any non-modal frames that exist as windows here to fix it
      *       also dont forget to set the frame here after creating it
      *       (e.g. after creating debug window: windowFrameArray[1] = DebugConsoleWindow.debugFrame;)
      */
@@ -75,7 +75,7 @@ public class MainWorker {
         ApplicationCore.checkCLIArgs(args, commandManager);
         checkOSCompatibility();
 
-        SwingGUI.setupLookAndFeel(true, false); // TODO: if dark mode should be setup
+        SwingGUI.setupLookAndFeel(true, true); // TODO: if dark mode should be setup
 
         loadPreferencesAndQueueSave();
 
