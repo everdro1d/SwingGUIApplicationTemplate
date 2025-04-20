@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static main.com.everdro1d.swingtemplate.core.MainWorker.*;
 
@@ -53,16 +55,15 @@ public class MainWindow extends JFrame {
 
     // TODO 1: add any UI Text Defaults to these locale classes
     private void addClassToLocale() {
-//        Map<String, Map<String, String>> map = new TreeMap<>();
-//        map.put("Main", new TreeMap<>());
-//        Map<String, String> mainMap = map.get("Main");
-//
-//        localeManager.addClassSpecificMap("MainWindow", map);
+        Map<String, Map<String, String>> map = new TreeMap<>();
+        map.put("Main", new TreeMap<>());
+        Map<String, String> mainMap = map.get("Main");
+
+        localeManager.addClassSpecificMap("MainWindow", map);
     }
 
     private void useLocale() {
-        //Map<String, String> varMap = localeManager.getAllVariablesWithinClassSpecificMap("MainWindow");
-        //titleText = varMap.getOrDefault("titleText", titleText);
+        Map<String, String> varMap = localeManager.getAllVariablesWithinClassSpecificMap("MainWindow");
     }
 
     /**

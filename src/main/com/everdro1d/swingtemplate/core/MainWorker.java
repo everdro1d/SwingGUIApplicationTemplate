@@ -16,6 +16,7 @@ import main.com.everdro1d.swingtemplate.core.commands.DebugCommand;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.prefs.Preferences;
 
 public class MainWorker {
@@ -32,7 +33,9 @@ public class MainWorker {
     );
     public static CommandManager commandManager = new CommandManager(CUSTOM_COMMANDS_MAP);
 
+    // NOTE: default locale & LocaleManager to handle I18n
     private static String currentLocale = "eng";
+    public static final LocaleManager localeManager = new LocaleManager(MainWorker.class);
 
     // NOTE: debug logging output all 'sout' statements must be wrapped in 'if (debug)'
     public static boolean debug = false;
@@ -67,6 +70,23 @@ public class MainWorker {
 
         startMainWindow();
         // checkUpdate(); TODO: enable when ready for release
+
+        // NOTE: this adds the program version to the locale header
+        if (!localeManager.getClassesInLocaleMap().contains("!head")) {
+            addVersionToLocale();
+        }
+    }
+
+    /**
+     * Adds the application version to the locale.
+     */
+    private static void addVersionToLocale() {
+        Map<String, Map<String, String>> classMap = new TreeMap<>();
+        classMap.put("version", new TreeMap<>());
+        Map<String, String> mainMap = classMap.get("version");
+        mainMap.put("currentVersion", currentVersion);
+
+        localeManager.addClassSpecificMap("!head", classMap);
     }
 
     /**
