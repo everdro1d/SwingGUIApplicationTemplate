@@ -50,6 +50,19 @@ public class MainWorker {
     // NOTE: instance of MainWindow
     private static MainWindow mainWindow;
 
+    /* NOTE: frame array exists because window title bars don't update with the LaF
+     *       add any frames that exist as windows here to fix it
+     *       also dont forget to set the frame here after creating it
+     *       (e.g. after creating debug window: windowFrameArray[1] = DebugConsoleWindow.debugFrame;)
+     */
+    public static JFrame[] windowFrameArray = new JFrame[]{
+            MainWindow.topFrame,
+            DebugConsoleWindow.debugFrame
+    };
+
+    // NOTE: central variables
+    public static boolean darkMode = false; // TODO: if dark mode is enabled
+
     // End of variables -----------------------------------------------------------------------------------------------|
 
     public static void main(String[] args) {
@@ -130,6 +143,7 @@ public class MainWorker {
         loadWindowPosition();
 
         currentLocale = prefs.get("currentLocale", "eng");
+        darkMode = prefs.getBoolean("darkMode", false);
 
         savePreferencesOnExit();
     }
@@ -140,7 +154,9 @@ public class MainWorker {
     private static void savePreferencesOnExit() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             saveWindowPosition();
+
             prefs.put("currentLocale", currentLocale);
+            prefs.putBoolean("darkMode", darkMode);
         }));
     }
 
@@ -174,6 +190,11 @@ public class MainWorker {
                         windowPosition[0], windowPosition[1], windowPosition[2]
                 );
                 SwingGUI.setFrameIcon(MainWindow.topFrame, "images/icon32.png", MainWorker.class);
+
+                // NOTE: the following is only if using dark mode
+                SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
+                SwingUtilities.updateComponentTreeUI(MainWindow.topFrame);
+
             } catch (Exception ex) {
                 if (debug) ex.printStackTrace(System.err);
                 System.err.println("Failed to start MainWindow. Enable debug logging for more information.");
@@ -191,6 +212,8 @@ public class MainWorker {
                     (MainWindow.fontSize - 2), prefs,
                     debug, localeManager
             );
+
+            windowFrameArray[1] = DebugConsoleWindow.debugFrame;
 
             if (debug) System.out.println("Debug console created.");
 
