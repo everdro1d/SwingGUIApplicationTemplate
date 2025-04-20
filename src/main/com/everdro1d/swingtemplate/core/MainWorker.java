@@ -67,6 +67,11 @@ public class MainWorker {
     // End of variables -----------------------------------------------------------------------------------------------|
 
     public static void main(String[] args) {
+        startUpActions(args);
+        startMainWindow();
+    }
+
+    private static void startUpActions(String[] args) {
         ApplicationCore.checkCLIArgs(args, commandManager);
         checkOSCompatibility();
 
@@ -84,7 +89,6 @@ public class MainWorker {
             System.out.println("Detected OS: " + ApplicationCore.detectOS());
         }
 
-        startMainWindow();
         // checkUpdate(); TODO: enable when ready for release
 
         // NOTE: this adds the program version to the locale header
