@@ -78,7 +78,7 @@ public class MainWorker {
         SwingGUI.setLookAndFeel(true, false);
         SwingGUI.lightOrDarkMode(false, new JFrame[]{MainWindow.topFrame});
         SwingGUI.uiSetup(false, MainWindow.fontName, MainWindow.fontSize);
-        loadPreferences();
+        loadPreferencesAndQueueSave();
 
         localeManager.loadLocaleFromFile("locale_" + currentLocale);
 
@@ -145,7 +145,7 @@ public class MainWorker {
     /**
      * Load the user settings from the preferences. And save the settings on exit.
      */
-    private static void loadPreferences() {
+    private static void loadPreferencesAndQueueSave() {
         loadWindowPosition();
 
         currentLocale = prefs.get("currentLocale", "eng");
