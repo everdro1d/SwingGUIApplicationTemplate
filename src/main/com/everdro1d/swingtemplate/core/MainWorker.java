@@ -26,11 +26,11 @@ public class MainWorker {
     public static final String devWebsite = "https://github.com/user/"; // TODO: update this for github user or pages
     public static final String currentVersion = "1.0.0"; // TODO: update me with each release
 
+    // NOTE: CommandManager obj for CLI args
     private static final Map<String, CommandInterface> CUSTOM_COMMANDS_MAP = Map.of(
             "-debug", new DebugCommand()
     );
     public static CommandManager commandManager = new CommandManager(CUSTOM_COMMANDS_MAP);
-    // CommandManager object for handling CLI commands
 
     private static String currentLocale = "eng";
 
@@ -38,11 +38,12 @@ public class MainWorker {
     public static boolean debug = false;
     public static DebugConsoleWindow debugConsoleWindow;
 
+    // NOTE: preferences object for saving and loading user settings
     static final Preferences prefs = Preferences.userNodeForPackage(MainWorker.class);
-    // Preferences object for saving and loading user settings
 
+    // NOTE: default window position
     public static int[] windowPosition = {0, 0, 0};
-    // Default window position
+
 
     // End of variables -----------------------------------------------------------------------------------------------|
 
@@ -88,7 +89,7 @@ public class MainWorker {
                 // Windows specific code
             }
             case "macOS" -> {
-                // macOS specific code
+                // MacOS specific code
             }
             case "Unix" -> {
                 // Unix specific code
@@ -105,7 +106,7 @@ public class MainWorker {
      */
     private static void loadPreferences() {
         loadWindowPosition();
-        // set locale
+
         currentLocale = prefs.get("currentLocale", "eng");
 
         savePreferencesOnExit();
@@ -116,7 +117,6 @@ public class MainWorker {
      */
     private static void savePreferencesOnExit() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            // Save the user settings on exit
             saveWindowPosition();
             prefs.put("currentLocale", currentLocale);
         }));

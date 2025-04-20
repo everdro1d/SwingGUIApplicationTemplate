@@ -22,10 +22,9 @@ public class MainWindow extends JFrame {
 
     // End of Swing components --------------------------------------------|
 
+    // NOTE: font name and size for the application
     public static String fontName = "Tahoma";
-    // Font name for the application
     public static int fontSize = 16;
-    // Font size for the application
 
     private final int WINDOW_WIDTH = 600;
     private final int WINDOW_HEIGHT = 400;
@@ -48,6 +47,7 @@ public class MainWindow extends JFrame {
         SwingGUI.setHandCursorToClickableComponents(topFrame);
     }
 
+    // TODO 1: add any UI Text Defaults to these locale classes
     private void addClassToLocale() {
 //        Map<String, Map<String, String>> map = new TreeMap<>();
 //        map.put("Main", new TreeMap<>());
@@ -70,7 +70,7 @@ public class MainWindow extends JFrame {
         SwingGUI.setFrameIcon(topFrame, "images/icon32.png", this.getClass());
         topFrame.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        topFrame.setResizable(false);
+        topFrame.setResizable(false); // TODO: resizeable?
         topFrame.setLocationRelativeTo(null);
 
         topFrame.addComponentListener(new ComponentAdapter() {
@@ -89,7 +89,7 @@ public class MainWindow extends JFrame {
         mainPanel.setLayout(new BorderLayout());
         topFrame.add(mainPanel);
         {
-            // Add components here
+            // TODO: add components here
         }
     }
 }
