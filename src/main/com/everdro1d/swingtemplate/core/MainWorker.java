@@ -75,10 +75,11 @@ public class MainWorker {
         ApplicationCore.checkCLIArgs(args, commandManager);
         checkOSCompatibility();
 
-        SwingGUI.setLookAndFeel(true, false);
-        SwingGUI.lightOrDarkMode(false, new JFrame[]{MainWindow.topFrame});
-        SwingGUI.uiSetup(false, MainWindow.fontName, MainWindow.fontSize);
+        SwingGUI.setupLookAndFeel(true, false); // TODO: if dark mode should be setup
+
         loadPreferencesAndQueueSave();
+
+        SwingGUI.uiSetup(MainWindow.fontName, MainWindow.fontSize);
 
         localeManager.loadLocaleFromFile("locale_" + currentLocale);
 
