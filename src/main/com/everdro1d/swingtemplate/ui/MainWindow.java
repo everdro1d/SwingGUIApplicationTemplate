@@ -11,8 +11,7 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import static main.com.everdro1d.swingtemplate.core.MainWorker.localeManager;
-import static main.com.everdro1d.swingtemplate.core.MainWorker.windowPosition;
+import static main.com.everdro1d.swingtemplate.core.MainWorker.*;
 
 public class MainWindow extends JFrame {
     // Variables ------------------------------------------------------------------------------------------------------|

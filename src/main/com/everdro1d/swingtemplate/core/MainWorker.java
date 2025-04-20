@@ -7,7 +7,6 @@ package main.com.everdro1d.swingtemplate.core;
 import com.everdro1d.libs.commands.CommandInterface;
 import com.everdro1d.libs.commands.CommandManager;
 import com.everdro1d.libs.core.*;
-import com.everdro1d.libs.io.Files;
 import com.everdro1d.libs.swing.*;
 import com.everdro1d.libs.swing.windows.DebugConsoleWindow;
 import main.com.everdro1d.swingtemplate.ui.MainWindow;
@@ -15,8 +14,6 @@ import main.com.everdro1d.swingtemplate.core.commands.DebugCommand;
 
 import javax.swing.*;
 import java.awt.*;
-import java.nio.file.Path;
-import java.util.Locale;
 import java.util.Map;
 import java.util.prefs.Preferences;
 
