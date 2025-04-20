@@ -115,7 +115,7 @@ public class MainWorker {
                 // Unix specific code
             }
             default -> {
-                System.out.println("Unknown OS detected. Exiting.");
+                System.out.println("Unknown OS detected. Cannot guarantee functionality. Exiting.");
                 System.exit(1);
             }
         }
@@ -173,7 +173,7 @@ public class MainWorker {
                 );
             } catch (Exception ex) {
                 if (debug) ex.printStackTrace(System.err);
-                System.err.println("Failed to start MainWindow.");
+                System.err.println("Failed to start MainWindow. Enable debug logging for more information.");
             }
         });
     }
