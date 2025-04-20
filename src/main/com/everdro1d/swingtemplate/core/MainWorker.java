@@ -61,6 +61,7 @@ public class MainWorker {
     };
 
     // NOTE: central variables
+    public static String detectedOS;
     public static boolean darkMode = false; // TODO: if dark mode is enabled
 
     // End of variables -----------------------------------------------------------------------------------------------|
@@ -110,6 +111,7 @@ public class MainWorker {
      */
     public static void checkOSCompatibility() {
         String detectedOS = ApplicationCore.detectOS();
+        MainWorker.detectedOS = detectedOS;
         executeOSSpecificCode(detectedOS);
     }
 
