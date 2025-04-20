@@ -194,7 +194,9 @@ public class MainWorker {
                 mainWindow = new MainWindow();
                 SwingGUI.setFramePosition(
                         MainWindow.topFrame,
-                        windowPosition[0], windowPosition[1], windowPosition[2]
+                        windowPosition[0],
+                        windowPosition[1],
+                        windowPosition[2]
                 );
                 SwingGUI.setFrameIcon(MainWindow.topFrame, "images/icon32.png", MainWorker.class);
 
