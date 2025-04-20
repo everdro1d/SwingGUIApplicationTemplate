@@ -21,8 +21,17 @@ public class MainWindow extends JFrame {
     // Swing components - Follow tab hierarchy for organization -----------|
     public static JFrame topFrame;
         private JPanel mainPanel;
+            private JPanel centerPanel;
+                private JLabel exampleLabel;
+                private JButton darkModeButton;
 
     // End of Swing components --------------------------------------------|
+
+    // UI Text Defaults ---------------------------------------------------|
+    // TODO 1: add to locale default methods
+    public static String titleText = "SwingGUI Application Template";
+    public static String darkModeButtonText = "Dark Mode Switch";
+    // End of UI Text Defaults --------------------------------------------|
 
     // NOTE: font name and size for the application
     public static String fontName = "Tahoma";
@@ -58,12 +67,16 @@ public class MainWindow extends JFrame {
         Map<String, Map<String, String>> map = new TreeMap<>();
         map.put("Main", new TreeMap<>());
         Map<String, String> mainMap = map.get("Main");
+        mainMap.put("titleText", titleText);
+        mainMap.put("darkModeButtonText", darkModeButtonText);
 
         localeManager.addClassSpecificMap("MainWindow", map);
     }
 
     private void useLocale() {
         Map<String, String> varMap = localeManager.getAllVariablesWithinClassSpecificMap("MainWindow");
+        titleText = varMap.getOrDefault("titleText", titleText);
+        darkModeButtonText = varMap.getOrDefault("darkModeButtonText", darkModeButtonText);
     }
 
     /**
@@ -71,7 +84,7 @@ public class MainWindow extends JFrame {
      */
     private void initializeWindowProperties() {
         topFrame = this;
-        topFrame.setTitle("MainWindow"); //TODO
+        topFrame.setTitle(titleText);
         topFrame.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         topFrame.setResizable(false); // TODO: resizeable?
@@ -94,6 +107,38 @@ public class MainWindow extends JFrame {
         topFrame.add(mainPanel);
         {
             // TODO: add components here
+            centerPanel = new JPanel();
+            centerPanel.setLayout(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.weightx = 0;
+            gbc.weighty = 1;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.insets = new Insets(4, 4, 4, 4);
+            mainPanel.add(centerPanel, BorderLayout.CENTER);
+            {
+                exampleLabel = new JLabel(titleText);
+                exampleLabel.setFont(boldFont);
+                exampleLabel.setAlignmentX(SwingConstants.CENTER);
+                exampleLabel.setAlignmentY(SwingConstants.CENTER);
+                centerPanel.add(exampleLabel, gbc);
+
+                gbc.gridy++; // vertical position between components
+
+                darkModeButton = new JButton(darkModeButtonText);
+                darkModeButton.setFont(boldFont);
+                darkModeButton.setAlignmentX(SwingConstants.CENTER);
+                darkModeButton.setAlignmentY(SwingConstants.CENTER);
+                centerPanel.add(darkModeButton, gbc);
+
+                darkModeButton.addActionListener(e -> {
+                    darkMode = !darkMode;
+                    SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
+                    SwingUtilities.updateComponentTreeUI(topFrame);
+                });
+            }
         }
     }
 }
