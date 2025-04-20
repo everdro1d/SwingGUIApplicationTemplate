@@ -8,6 +8,7 @@ import com.everdro1d.libs.commands.CommandInterface;
 import com.everdro1d.libs.commands.CommandManager;
 import com.everdro1d.libs.core.*;
 import com.everdro1d.libs.swing.*;
+import com.everdro1d.libs.swing.dialogs.UpdateCheckerDialog;
 import com.everdro1d.libs.swing.windows.DebugConsoleWindow;
 import main.com.everdro1d.swingtemplate.ui.MainWindow;
 import main.com.everdro1d.swingtemplate.core.commands.DebugCommand;
@@ -19,6 +20,12 @@ import java.util.prefs.Preferences;
 
 public class MainWorker {
     // Variables ------------------------------------------------------------------------------------------------------|
+
+    // NOTE: Update checker info
+    public static final String githubRepoURL = "https://github.com/everdro1d/SwingGUIApplicationTemplate/"; // TODO: replace this with relevant repo
+    public static final String devWebsite = "https://github.com/user/"; // TODO: update this for github user or pages
+    public static final String currentVersion = "1.0.0"; // TODO: update me with each release
+
     private static final Map<String, CommandInterface> CUSTOM_COMMANDS_MAP = Map.of(
             "-debug", new DebugCommand()
     );
@@ -58,6 +65,7 @@ public class MainWorker {
         }
 
         startMainWindow();
+        // checkUpdate(); TODO: enable when ready for release
     }
 
     /**
@@ -171,5 +179,17 @@ public class MainWorker {
             EventQueue.invokeLater(() -> debugConsoleWindow.toFront());
             if (debug) System.out.println("Debug console already open.");
         }
+    }
+
+    /**
+     * Checks project GitHub for the latest version at launch.
+     * Remember to enable this in startUpActions before release.
+     */
+    public static void checkUpdate() {
+        new Thread(() -> UpdateCheckerDialog.showUpdateCheckerDialog(
+                currentVersion, null, debug, githubRepoURL,
+                devWebsite + "posts/swing-gui-application-template/", // TODO: update the webpage path
+                prefs, localeManager
+        )).start();
     }
 }
