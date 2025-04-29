@@ -34,7 +34,7 @@ public class MainWorker {
     public static CommandManager commandManager = new CommandManager(CUSTOM_COMMANDS_MAP);
 
     // NOTE: default locale & LocaleManager to handle I18n
-    private static String currentLocale = "eng";
+    public static String currentLocale = "eng";
     public static final LocaleManager localeManager = new LocaleManager(MainWorker.class);
 
     // NOTE: debug logging output all 'sout' statements must be wrapped in 'if (debug)'
@@ -61,8 +61,11 @@ public class MainWorker {
     };
 
     // NOTE: central variables
+    /**
+     * Valid: "Windows", "macOS", "Unix"
+     */
     public static String detectedOS;
-    public static boolean darkMode = false; // TODO: if dark mode is enabled
+    public static boolean darkMode = false; // TODO: only if dark mode is enabled
 
     // End of variables -----------------------------------------------------------------------------------------------|
 
@@ -82,6 +85,7 @@ public class MainWorker {
         SwingGUI.uiSetup(MainWindow.fontName, MainWindow.fontSize);
 
         localeManager.loadLocaleFromFile("locale_" + currentLocale);
+        currentLocale = localeManager.getCurrentLocale();
 
         if (debug) {
             showDebugConsole();
