@@ -89,6 +89,7 @@ public class MainWindow extends JFrame {
      */
     private void initializeWindowProperties() {
         topFrame = this;
+        windowFrameArray[0] = topFrame; // set the frame in the array
         topFrame.setTitle(titleText);
         topFrame.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -199,14 +200,17 @@ public class MainWindow extends JFrame {
                 darkModeButton.addActionListener(e -> {
                     darkMode = !darkMode;
                     SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
-                    Icon i = SwingGUI.changeIconColor(
-                            settingsButton.getIcon(),
-                            UIManager.getColor("RootPane.foreground")
-                    );
-                    settingsButton.setIcon(i);
-                    SwingUtilities.updateComponentTreeUI(topFrame);
+                    customActionsOnDarkModeSwitch();
                 });
             }
         }
+    }
+
+    public void customActionsOnDarkModeSwitch() {
+        Icon i = SwingGUI.changeIconColor(
+                settingsButton.getIcon(),
+                UIManager.getColor("RootPane.foreground")
+        );
+        settingsButton.setIcon(i);
     }
 }

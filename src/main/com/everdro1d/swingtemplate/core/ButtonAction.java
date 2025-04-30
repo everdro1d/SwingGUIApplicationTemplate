@@ -12,7 +12,7 @@ public class ButtonAction {
     // Variables ------------------------------------------------------------------------------------------------------|
 
     // NOTE: settings window for locale changes & basic settings
-    private static BasicSettingsWindow settingsWindow;
+    public static BasicSettingsWindow settingsWindow;
 
     public static void showSettingsWindow() {
         if (debug) System.out.println("Showing settings window.");
@@ -37,6 +37,7 @@ public class ButtonAction {
                     }
                 }
             };
+            windowFrameArray[2] = settingsWindow;
         } else {
             settingsWindow.setVisible(true);
             settingsWindow.requestFocus();

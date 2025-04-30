@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.prefs.Preferences;
 
+import static main.com.everdro1d.swingtemplate.core.ButtonAction.settingsWindow;
+
 public class MainWorker {
     // Variables ------------------------------------------------------------------------------------------------------|
 
@@ -57,7 +59,8 @@ public class MainWorker {
      */
     public static JFrame[] windowFrameArray = new JFrame[]{
             MainWindow.topFrame,
-            DebugConsoleWindow.debugFrame
+            debugConsoleWindow,
+            settingsWindow
     };
 
     // NOTE: central variables
@@ -206,7 +209,7 @@ public class MainWorker {
 
                 // NOTE: the following is only if using dark mode
                 SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
-                SwingUtilities.updateComponentTreeUI(MainWindow.topFrame);
+                mainWindow.customActionsOnDarkModeSwitch();
 
             } catch (Exception ex) {
                 if (debug) ex.printStackTrace(System.err);
@@ -226,7 +229,7 @@ public class MainWorker {
                     debug, localeManager
             );
 
-            windowFrameArray[1] = DebugConsoleWindow.debugFrame;
+            windowFrameArray[1] = debugConsoleWindow;
 
             if (debug) System.out.println("Debug console created.");
 
