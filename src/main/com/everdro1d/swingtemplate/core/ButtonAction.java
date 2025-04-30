@@ -20,7 +20,8 @@ public class ButtonAction {
         if (settingsWindow == null ||  !settingsWindow.isVisible()) {
             settingsWindow = new BasicSettingsWindow(
                     topFrame, MainWindow.fontName, MainWindow.fontSize,
-                    prefs, debug, localeManager, new GeneralSettingsPanel()
+                    prefs, debug, localeManager, new GeneralSettingsPanel(),
+                    githubRepoURL + "tree/master/locale/", devWebsite
             ) {
                 @Override
                 public void applySettings() {
