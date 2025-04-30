@@ -155,6 +155,8 @@ public class MainWorker {
      * Load the user settings from the preferences. And save the settings on exit.
      */
     private static void loadPreferencesAndQueueSave() {
+        ApplicationCore.loadConfigFile(MainWorker.class);
+
         loadWindowPosition();
 
         currentLocale = prefs.get("currentLocale", "eng");
@@ -172,6 +174,8 @@ public class MainWorker {
 
             prefs.put("currentLocale", currentLocale);
             prefs.putBoolean("darkMode", darkMode);
+
+            ApplicationCore.saveConfigFile(MainWorker.class, prefs);
         }));
     }
 
