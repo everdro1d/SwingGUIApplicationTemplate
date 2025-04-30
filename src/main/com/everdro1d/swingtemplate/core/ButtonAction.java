@@ -1,5 +1,6 @@
 package main.com.everdro1d.swingtemplate.core;
 
+import com.everdro1d.libs.swing.SwingGUI;
 import com.everdro1d.libs.swing.windows.settings.BasicSettingsWindow;
 import main.com.everdro1d.swingtemplate.ui.MainWindow;
 import main.com.everdro1d.swingtemplate.ui.panels.GeneralSettingsPanel;
@@ -16,7 +17,7 @@ public class ButtonAction {
 
     public static void showSettingsWindow() {
         if (debug) System.out.println("Showing settings window.");
-        if (settingsWindow == null) {
+        if (settingsWindow == null ||  !settingsWindow.isVisible()) {
             settingsWindow = new BasicSettingsWindow(
                     topFrame, MainWindow.fontName, MainWindow.fontSize,
                     prefs, debug, localeManager, new GeneralSettingsPanel()
@@ -26,20 +27,26 @@ public class ButtonAction {
                     localeManager.reloadLocaleInProgram(prefs.get("currentLocale", localeManager.getCurrentLocale()));
                     currentLocale = localeManager.getCurrentLocale();
 
+                    debug = prefs.getBoolean("debug", debug);
+                    darkMode = prefs.getBoolean("darkMode", darkMode);
+
                     if (debug) {
                         showDebugConsole();
-                        if (debug) System.out.println("Loaded locale: " + currentLocale);
+                        if (debug) System.out.println("Active locale: " + currentLocale);
                         System.out.println("Active: " + MainWindow.titleText + " v" + currentVersion);
                         System.out.println("Detected OS: " + MainWorker.detectedOS);
                     } else if (debugConsoleWindow != null) {
                         debugConsoleWindow.dispose();
                         debugConsoleWindow = null;
+                        windowFrameArray[1] = null;
                     }
+
+                    SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
+                    getInstanceOfMainWindow().customActionsOnDarkModeSwitch();
                 }
             };
             windowFrameArray[2] = settingsWindow;
         } else {
-            settingsWindow.setVisible(true);
             settingsWindow.requestFocus();
             settingsWindow.toFront();
         }

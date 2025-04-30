@@ -44,7 +44,7 @@ public class MainWorker {
     public static DebugConsoleWindow debugConsoleWindow;
 
     // NOTE: preferences object for saving and loading user settings
-    static final Preferences prefs = Preferences.userNodeForPackage(MainWorker.class);
+    public static final Preferences prefs = Preferences.userNodeForPackage(MainWorker.class);
 
     // NOTE: default window position
     public static int[] windowPosition = {0, 0, 0};
@@ -58,7 +58,7 @@ public class MainWorker {
      *       (e.g. after creating debug window: windowFrameArray[1] = DebugConsoleWindow.debugFrame;)
      */
     public static JFrame[] windowFrameArray = new JFrame[]{
-            MainWindow.topFrame,
+            mainWindow,
             debugConsoleWindow,
             settingsWindow
     };
@@ -83,16 +83,17 @@ public class MainWorker {
 
         SwingGUI.setupLookAndFeel(true, true); // TODO: if dark mode should be setup
 
-        loadPreferencesAndQueueSave();
-
         SwingGUI.uiSetup(MainWindow.fontName, MainWindow.fontSize);
 
-        localeManager.loadLocaleFromFile("locale_" + currentLocale);
+        loadPreferencesAndQueueSave();
+
+
+        localeManager.loadLocaleFromFile(currentLocale);
         currentLocale = localeManager.getCurrentLocale();
 
         if (debug) {
             showDebugConsole();
-            System.out.println("Loaded locale: locale_" + currentLocale + " at: " + localeManager.getLocaleDirPath());
+            System.out.println("Loaded locale: " + currentLocale + " at: " + localeManager.getLocaleDirPath());
             System.out.println("Starting " + MainWindow.titleText + " v" + currentVersion + "...");
             System.out.println("Detected OS: " + ApplicationCore.detectOS());
         }
@@ -199,13 +200,15 @@ public class MainWorker {
         EventQueue.invokeLater(() -> {
             try {
                 mainWindow = new MainWindow();
+                windowFrameArray[0] = mainWindow;
+
                 SwingGUI.setFramePosition(
-                        MainWindow.topFrame,
+                        mainWindow,
                         windowPosition[0],
                         windowPosition[1],
                         windowPosition[2]
                 );
-                SwingGUI.setFrameIcon(MainWindow.topFrame, "images/icon32.png", MainWorker.class);
+                SwingGUI.setFrameIcon(mainWindow, "images/icon32.png", MainWorker.class);
 
                 // NOTE: the following is only if using dark mode
                 SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
@@ -253,5 +256,9 @@ public class MainWorker {
                 devWebsite + "posts/swing-gui-application-template/", // TODO: update the webpage path
                 prefs, localeManager
         )).start();
+    }
+
+    public static MainWindow getInstanceOfMainWindow() {
+        return mainWindow;
     }
 }
