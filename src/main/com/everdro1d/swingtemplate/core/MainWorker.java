@@ -26,7 +26,7 @@ public class MainWorker {
 
     // NOTE: Update checker info
     public static final String githubRepoURL = "https://github.com/everdro1d/SwingGUIApplicationTemplate/"; // TODO: replace this with relevant repo
-    public static final String devWebsite = "https://github.com/user/"; // TODO: update this for github user or pages
+    public static final String devWebsite = "https://everdro1d.github.io/"; // TODO: update this for github user or pages
     public static final String currentVersion = "1.0.0"; // TODO: update me with each release
 
     // NOTE: CommandManager obj for CLI args
