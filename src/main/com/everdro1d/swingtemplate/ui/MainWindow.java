@@ -198,14 +198,16 @@ public class MainWindow extends JFrame {
 
                 darkModeButton.addActionListener(e -> {
                     darkMode = !darkMode;
-                    SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
-                    customActionsOnDarkModeSwitch();
+                    darkModeSwitch();
                 });
             }
         }
     }
 
-    public void customActionsOnDarkModeSwitch() {
+    public void darkModeSwitch() {
+        darkMode = !darkMode;
+        SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
+
         Icon i = SwingGUI.changeIconColor(
                 settingsButton.getIcon(),
                 UIManager.getColor("RootPane.foreground")
