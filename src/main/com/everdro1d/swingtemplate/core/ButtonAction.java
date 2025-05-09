@@ -5,6 +5,8 @@ import com.everdro1d.libs.swing.windows.settings.BasicSettingsWindow;
 import main.com.everdro1d.swingtemplate.ui.MainWindow;
 import main.com.everdro1d.swingtemplate.ui.panels.GeneralSettingsPanel;
 
+import java.util.Map;
+
 import static main.com.everdro1d.swingtemplate.core.MainWorker.*;
 import static main.com.everdro1d.swingtemplate.ui.MainWindow.topFrame;
 
@@ -43,7 +45,17 @@ public class ButtonAction {
                     }
 
                     SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
-                    getInstanceOfMainWindow().customActionsOnDarkModeSwitch();
+                    getMainWindow().customActionsOnDarkModeSwitch();
+                }
+
+                @Override
+                public Map<String, String> setOriginalSettingsMap() {
+                    return Map.of();
+                }
+
+                @Override
+                public Map<String, Boolean> setRestartRequiredSettingsMap() {
+                    return Map.of();
                 }
             };
             windowFrameArray[2] = settingsWindow;
