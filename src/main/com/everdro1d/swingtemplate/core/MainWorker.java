@@ -136,13 +136,13 @@ public class MainWorker {
      */
     public static void executeOSSpecificCode(String detectedOS) {
         switch (detectedOS) {
-            case "Windows" -> {
+            case "windows" -> {
                 // Windows specific code
             }
-            case "macOS" -> {
+            case "mac" -> {
                 // MacOS specific code
             }
-            case "Unix" -> {
+            case "unix" -> {
                 // Unix specific code
             }
             default -> {
