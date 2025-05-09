@@ -7,6 +7,7 @@ package main.com.everdro1d.swingtemplate.core;
 import com.everdro1d.libs.commands.CommandInterface;
 import com.everdro1d.libs.commands.CommandManager;
 import com.everdro1d.libs.core.*;
+import com.everdro1d.libs.locale.*;
 import com.everdro1d.libs.swing.*;
 import com.everdro1d.libs.swing.dialogs.UpdateCheckerDialog;
 import com.everdro1d.libs.swing.windows.DebugConsoleWindow;
@@ -28,6 +29,7 @@ public class MainWorker {
     public static final String githubRepoURL = "https://github.com/everdro1d/SwingGUIApplicationTemplate/"; // TODO: replace this with relevant repo
     public static final String devWebsite = "https://everdro1d.github.io/"; // TODO: update this for github user or pages
     public static final String currentVersion = "1.0.0"; // TODO: update me with each release
+    public static final String developerConfigDirectoryName = "dro1dDev"; // TODO: update this for dev
 
     // NOTE: CommandManager obj for CLI args
     private static final Map<String, CommandInterface> CUSTOM_COMMANDS_MAP = Map.of(
@@ -37,7 +39,7 @@ public class MainWorker {
 
     // NOTE: default locale & LocaleManager to handle I18n
     public static String currentLocale = "eng";
-    public static final LocaleManager localeManager = new LocaleManager(MainWorker.class);
+    public static final LocaleManager localeManager = new LocaleManager(MainWorker.class, developerConfigDirectoryName);
 
     // NOTE: debug logging output all 'sout' statements must be wrapped in 'if (debug)'
     public static boolean debug = false;
@@ -87,13 +89,12 @@ public class MainWorker {
 
         loadPreferencesAndQueueSave();
 
-
         localeManager.loadLocaleFromFile(currentLocale);
         currentLocale = localeManager.getCurrentLocale();
 
         if (debug) {
             showDebugConsole();
-            System.out.println("Loaded locale: " + currentLocale + " at: " + localeManager.getLocaleDirPath());
+            System.out.println("Loaded locale: " + currentLocale + " at: " + localeManager.getLocaleDirectoryPath());
             System.out.println("Starting " + MainWindow.titleText + " v" + currentVersion + "...");
             System.out.println("Detected OS: " + ApplicationCore.detectOS());
         }
@@ -155,7 +156,7 @@ public class MainWorker {
      * Load the user settings from the preferences. And save the settings on exit.
      */
     private static void loadPreferencesAndQueueSave() {
-        ApplicationCore.loadConfigFile(MainWorker.class);
+        ApplicationCore.loadConfigFile(MainWorker.class, developerConfigDirectoryName);
 
         loadWindowPosition();
 
@@ -175,7 +176,7 @@ public class MainWorker {
             prefs.put("currentLocale", currentLocale);
             prefs.putBoolean("darkMode", darkMode);
 
-            ApplicationCore.saveConfigFile(MainWorker.class, prefs);
+            ApplicationCore.saveConfigFile(MainWorker.class, developerConfigDirectoryName, prefs);
         }));
     }
 
@@ -262,7 +263,7 @@ public class MainWorker {
         )).start();
     }
 
-    public static MainWindow getInstanceOfMainWindow() {
+    public static MainWindow getMainWindow() {
         return mainWindow;
     }
 }
