@@ -54,7 +54,7 @@ public class MainWorker {
     // NOTE: instance of MainWindow
     private static MainWindow mainWindow;
 
-    /* NOTE: frame array exists because window title bars don't update with the LaF
+    /* NOTE: frame array exists to update with the LaF
      *       add any non-modal frames that exist as windows here to fix it
      *       also dont forget to set the frame here after creating it
      *       (e.g. after creating debug window: windowFrameArray[1] = DebugConsoleWindow.debugFrame;)
@@ -67,7 +67,7 @@ public class MainWorker {
 
     // NOTE: central variables
     /**
-     * Valid: "Windows", "macOS", "Unix"
+     * Valid: "windows", "mac", "unix"
      */
     public static String detectedOS;
     public static boolean darkMode = false; // TODO: only if dark mode is enabled
