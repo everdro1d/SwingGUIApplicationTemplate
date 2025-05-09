@@ -141,6 +141,9 @@ public class MainWorker {
             }
             case "mac" -> {
                 // MacOS specific code
+
+                System.setProperty("apple.awt.application.name", MainWindow.titleText);
+                System.setProperty("apple.awt.application.appearance", "system");
             }
             case "unix" -> {
                 // Unix specific code
