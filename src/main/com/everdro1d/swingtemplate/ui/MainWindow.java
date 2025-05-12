@@ -206,7 +206,6 @@ public class MainWindow extends JFrame {
     }
 
     public void darkModeSwitch() {
-        darkMode = !darkMode;
         SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
 
         Icon i = ImageUtils.changeIconColor(
