@@ -4,6 +4,7 @@
 
 package main.com.everdro1d.swingtemplate.ui;
 
+import com.everdro1d.libs.swing.ImageUtils;
 import com.everdro1d.libs.swing.SwingGUI;
 
 import javax.swing.*;
@@ -148,7 +149,7 @@ public class MainWindow extends JFrame {
 
                 settingsButton = new JButton();
                 settingsButton.setPreferredSize(new Dimension(50, 50));
-                Icon settingsIcon = SwingGUI.getApplicationIcon("images/settings.png", this.getClass());
+                Icon settingsIcon = ImageUtils.getApplicationIcon("images/settings.png", this.getClass());
                 settingsButton.setIcon(settingsIcon);
                 settingsButton.setBorderPainted(false);
                 settingsButton.setContentAreaFilled(false);
@@ -208,7 +209,7 @@ public class MainWindow extends JFrame {
         darkMode = !darkMode;
         SwingGUI.switchLightOrDarkMode(darkMode, windowFrameArray);
 
-        Icon i = SwingGUI.changeIconColor(
+        Icon i = ImageUtils.changeIconColor(
                 settingsButton.getIcon(),
                 UIManager.getColor("RootPane.foreground")
         );
