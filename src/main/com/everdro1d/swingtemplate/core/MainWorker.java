@@ -71,6 +71,7 @@ public class MainWorker {
      */
     public static String detectedOS;
     public static boolean darkMode = false; // TODO: only if dark mode is enabled
+    public static final boolean useContrastTitleBars = true; //TODO: if you want to use contrasting title bar colors
 
     // End of variables -----------------------------------------------------------------------------------------------|
 
@@ -83,7 +84,10 @@ public class MainWorker {
         ApplicationCore.checkCLIArgs(args, commandManager);
         checkOSCompatibility();
 
-        SwingGUI.setupLookAndFeel(true, true); // TODO: if dark mode should be setup
+        UIManager.put("Application.useContrastTitleBars", useContrastTitleBars);
+
+        // TODO: if dark mode should be allowed in the application and if the application should start in dark mode
+        SwingGUI.setupLookAndFeel(true, true, prefs.getBoolean("darkMode", false));
 
         SwingGUI.uiSetup(MainWindow.fontName, MainWindow.fontSize);
 
