@@ -89,7 +89,7 @@ public class MainWorker {
         // TODO: if dark mode should be allowed in the application and if the application should start in dark mode
         SwingGUI.setupLookAndFeel(true, true, prefs.getBoolean("darkMode", false));
 
-        SwingGUI.uiSetup(MainWindow.fontName, MainWindow.fontSize);
+        SwingGUI.uiSetup(MainWindow.FONT);
 
         loadPreferencesAndQueueSave();
 

@@ -42,9 +42,9 @@ public class MainWindow extends JFrame {
     // NOTE: font name and size for the application
     public static String fontName = "Tahoma";
     public static int fontSize = 16;
-    public static final Font font = new Font(fontName, Font.PLAIN, fontSize);
-    public static final Font boldFont = new Font(fontName, Font.BOLD, fontSize);
-    public static final Font smallFont = new Font(fontName, Font.PLAIN, (fontSize - 2));
+    public static final Font FONT = new Font(fontName, Font.PLAIN, fontSize);
+    public static final Font BOLD_FONT = new Font(fontName, Font.BOLD, fontSize);
+    public static final Font SMALL_FONT = new Font(fontName, Font.PLAIN, (fontSize - 2));
 
     private final int WINDOW_WIDTH = 600;
     private final int EDGE_PADDING = 15;
@@ -184,7 +184,7 @@ public class MainWindow extends JFrame {
             mainPanel.add(centerPanel, BorderLayout.CENTER);
             {
                 exampleLabel = new JLabel(titleText);
-                exampleLabel.setFont(boldFont);
+                exampleLabel.setFont(BOLD_FONT);
                 exampleLabel.setAlignmentX(SwingConstants.CENTER);
                 exampleLabel.setAlignmentY(SwingConstants.CENTER);
                 centerPanel.add(exampleLabel, centerGBC);
@@ -192,7 +192,7 @@ public class MainWindow extends JFrame {
                 centerGBC.gridy++; // vertical position between components
 
                 darkModeButton = new JButton(darkModeButtonText);
-                darkModeButton.setFont(boldFont);
+                darkModeButton.setFont(BOLD_FONT);
                 darkModeButton.setAlignmentX(SwingConstants.CENTER);
                 darkModeButton.setAlignmentY(SwingConstants.CENTER);
                 centerPanel.add(darkModeButton, centerGBC);
