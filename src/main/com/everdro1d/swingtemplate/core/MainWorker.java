@@ -51,6 +51,9 @@ public class MainWorker {
     // NOTE: default window position
     public static int[] windowPosition = {0, 0, 0};
 
+    // NOTE: window size to be set based on previous session
+    public static Dimension windowSize = new Dimension();
+
     // NOTE: instance of MainWindow
     private static MainWindow mainWindow;
 
@@ -200,6 +203,9 @@ public class MainWorker {
         prefs.putInt("framePosX", windowPosition[0]);
         prefs.putInt("framePosY", windowPosition[1]);
         prefs.putInt("activeMonitor", windowPosition[2]);
+
+        prefs.putInt("windowWidth", windowSize.width);
+        prefs.putInt("windowHeight", windowSize.height);
     }
 
     /**
@@ -217,6 +223,14 @@ public class MainWorker {
                         windowPosition[1],
                         windowPosition[2]
                 );
+
+                windowSize.setSize(
+                        prefs.getInt("windowWidth", mainWindow.getMinimumWindowWidth()),
+                        prefs.getInt("windowHeight", mainWindow.getMinimumWindowHeight())
+                );
+
+                mainWindow.setSize(windowSize);
+
                 ImageUtils.setFrameIcon(mainWindow, "images/icon32.png", MainWorker.class);
 
                 // NOTE: the following is only if using dark mode

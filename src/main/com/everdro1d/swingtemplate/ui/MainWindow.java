@@ -101,6 +101,11 @@ public class MainWindow extends JFrame {
             public void componentMoved(ComponentEvent e) {
                 windowPosition = SwingGUI.getFramePositionOnScreen(topFrame);
             }
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+                windowSize = topFrame.getSize();
+            }
         });
     }
 
@@ -213,5 +218,13 @@ public class MainWindow extends JFrame {
                 UIManager.getColor("RootPane.foreground")
         );
         settingsButton.setIcon(i);
+    }
+
+    public int getMinimumWindowWidth() {
+        return WINDOW_WIDTH;
+    }
+
+    public int getMinimumWindowHeight() {
+        return WINDOW_HEIGHT;
     }
 }
