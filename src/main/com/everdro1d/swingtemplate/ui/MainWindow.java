@@ -46,9 +46,9 @@ public class MainWindow extends JFrame {
     public static final Font BOLD_FONT = new Font(fontName, Font.BOLD, fontSize);
     public static final Font SMALL_FONT = new Font(fontName, Font.PLAIN, (fontSize - 2));
 
-    private final int WINDOW_WIDTH = 600;
-    private final int EDGE_PADDING = 15;
+    private final int WINDOW_WIDTH = 600; // TODO: rename these two to MIN_ or MINIMUM_ if you use resizeable windows
     private final int WINDOW_HEIGHT = 400;
+    private final int EDGE_PADDING = 15;
 
 
     // End of variables -----------------------------------------------------------------------------------------------|
@@ -93,7 +93,7 @@ public class MainWindow extends JFrame {
         topFrame.setTitle(titleText);
         topFrame.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        topFrame.setResizable(false); // TODO: resizeable?
+        topFrame.setResizable(false); // TODO: resizeable? see note on WINDOW_WIDTH and WINDOW_HEIGHT
         topFrame.setLocationRelativeTo(null);
 
         topFrame.addComponentListener(new ComponentAdapter() {
