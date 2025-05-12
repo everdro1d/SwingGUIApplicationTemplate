@@ -96,7 +96,9 @@ public class MainWorker {
         localeManager.loadLocaleFromFile(currentLocale);
         currentLocale = localeManager.getCurrentLocale();
 
-        SwingUtilities.invokeLater(MainWorker::showDebugConsole);
+        if (debug) {
+            SwingUtilities.invokeLater(MainWorker::showDebugConsole);
+        }
 
         // checkUpdate(); TODO: enable when ready for release
 
