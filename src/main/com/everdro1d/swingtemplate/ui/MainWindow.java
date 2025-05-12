@@ -68,7 +68,7 @@ public class MainWindow extends JFrame {
         SwingGUI.setHandCursorToClickableComponents(topFrame);
     }
 
-    // TODO 1: add any UI Text Defaults to these locale classes
+    // TODO 1: add any UI Text Defaults to these two locale methods
     private void addClassToLocale() {
         Map<String, Map<String, String>> map = new TreeMap<>();
         map.put("Main", new TreeMap<>());
