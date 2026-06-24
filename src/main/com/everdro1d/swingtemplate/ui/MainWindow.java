@@ -6,6 +6,7 @@ package main.com.everdro1d.swingtemplate.ui;
 
 import com.everdro1d.libs.swing.ImageUtils;
 import com.everdro1d.libs.swing.SwingGUI;
+import com.everdro1d.libs.swing.components.TrackingFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ import java.util.TreeMap;
 import static main.com.everdro1d.swingtemplate.core.ButtonAction.showSettingsWindow;
 import static main.com.everdro1d.swingtemplate.core.MainWorker.*;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends TrackingFrame {
     // Variables ------------------------------------------------------------------------------------------------------|
 
     // Swing components - Follow tab hierarchy for organization -----------|
@@ -54,9 +55,11 @@ public class MainWindow extends JFrame {
     // End of variables -----------------------------------------------------------------------------------------------|
 
     public MainWindow() {
+        super(prefs, "mainWindow");
+
         // if the locale does not contain the class, add it and it's components
         if (!localeManager.getClassesInLocaleMap().contains("MainWindow")) {
-            addClassToLocale();
+            addClassToLocale(); //TODO disable this when working on locale (it will get annoying)
         }
         useLocale();
 
@@ -94,19 +97,6 @@ public class MainWindow extends JFrame {
         topFrame.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         topFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         topFrame.setResizable(false); // TODO: resizeable? see note on WINDOW_WIDTH and WINDOW_HEIGHT
-        topFrame.setLocationRelativeTo(null);
-
-        topFrame.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentMoved(ComponentEvent e) {
-                windowPosition = SwingGUI.getFramePositionOnScreen(topFrame);
-            }
-
-            @Override
-            public void componentResized(ComponentEvent e) {
-                windowSize = topFrame.getSize();
-            }
-        });
     }
 
     /**

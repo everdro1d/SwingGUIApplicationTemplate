@@ -51,12 +51,6 @@ public class MainWorker {
     // NOTE: preferences object for saving and loading user settings
     public static final Preferences prefs = Preferences.userNodeForPackage(MainWorker.class);
 
-    // NOTE: default window position
-    public static int[] windowPosition = {0, 0, 0};
-
-    // NOTE: window size to be set based on previous session
-    public static Dimension windowSize = new Dimension();
-
     // NOTE: instance of MainWindow
     private static MainWindow mainWindow;
 
@@ -168,8 +162,6 @@ public class MainWorker {
     private static void loadPreferencesAndQueueSave() {
         ApplicationCore.loadConfigFile(MainWorker.class, developerConfigDirectoryName);
 
-        loadWindowPosition();
-
         currentLocale = prefs.get("currentLocale", "eng");
         darkMode = prefs.getBoolean("darkMode", false);
 
@@ -181,34 +173,11 @@ public class MainWorker {
      */
     private static void savePreferencesOnExit() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            saveWindowPosition();
-
             prefs.put("currentLocale", currentLocale);
             prefs.putBoolean("darkMode", darkMode);
 
             ApplicationCore.saveConfigFile(MainWorker.class, developerConfigDirectoryName, prefs);
         }));
-    }
-
-    /**
-     * Load the window position from the preferences. And save the position on exit.
-     */
-    private static void loadWindowPosition() {
-        windowPosition[0] = prefs.getInt("framePosX", 0);
-        windowPosition[1] = prefs.getInt("framePosY", 0);
-        windowPosition[2] = prefs.getInt("activeMonitor", 0);
-    }
-
-    /**
-     * Save the window position to the preferences.
-     */
-    private static void saveWindowPosition() {
-        prefs.putInt("framePosX", windowPosition[0]);
-        prefs.putInt("framePosY", windowPosition[1]);
-        prefs.putInt("activeMonitor", windowPosition[2]);
-
-        prefs.putInt("windowWidth", windowSize.width);
-        prefs.putInt("windowHeight", windowSize.height);
     }
 
     /**
@@ -219,20 +188,6 @@ public class MainWorker {
             try {
                 mainWindow = new MainWindow();
                 windowFrameArray[0] = mainWindow;
-
-                SwingGUI.setFramePosition(
-                        mainWindow,
-                        windowPosition[0],
-                        windowPosition[1],
-                        windowPosition[2]
-                );
-
-                windowSize.setSize(
-                        prefs.getInt("windowWidth", mainWindow.getMinimumWindowWidth()),
-                        prefs.getInt("windowHeight", mainWindow.getMinimumWindowHeight())
-                );
-
-                mainWindow.setSize(windowSize);
 
                 ImageUtils.setFrameIcon(mainWindow, "images/icon32.png", MainWorker.class);
 
@@ -252,7 +207,7 @@ public class MainWorker {
     public static void showDebugConsole() {
         if (debugConsoleWindow == null) {
             debugConsoleWindow = new DebugConsoleWindow(
-                    MainWindow.topFrame, MainWindow.fontName,
+                    MainWindow.fontName,
                     (MainWindow.fontSize - 2), prefs,
                     debug, localeManager
             );
